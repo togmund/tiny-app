@@ -12,6 +12,10 @@ const urlDatabase = {
 };
 
 
+// Set the view engine
+app.set("view engine", "ejs");
+
+
 // URL routing
 app.get("/", (req, res) => {
   res.send("Hello, there!");
@@ -30,5 +34,4 @@ app.get("/hello", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-
 
