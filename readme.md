@@ -8,10 +8,10 @@ You will build an HTTP Server that handles requests from the browser (client). A
 ### Contributors:
 * [@togmund](https://github.com/togmund)
 
-### NPM Modules Used:
+### NPM Packages Used:
 * [express](https://github.com/expressjs/express)
-* [nodemon](https://github.com/remy/nodemon)
 * [ejs](https://github.com/mde/ejs)
+* [nodemon](https://github.com/remy/nodemon)
 
 # Functional Requirements
 

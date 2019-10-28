@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000; // default port 8080
 
 
-// Ephemeral Data to push into the page
+// Ephemeral Data
 const urlDatabase = {
   "b2xVn2": "http://www.medium.com",
   "9sm5xK": "https://old.reddit.com/r/nba/",
@@ -19,6 +19,11 @@ app.set("view engine", "ejs");
 // URL routing
 app.get("/", (req, res) => {
   res.send("Hello, there!");
+});
+
+app.get("/urls", (req, res) => {
+  let templateVars = { urls: urlDatabase };
+  res.render("urls_index", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
