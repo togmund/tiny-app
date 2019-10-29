@@ -1,5 +1,6 @@
 // Requirements and dependencies
 const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 const PORT = 3000; // default port 8080
 
@@ -10,6 +11,10 @@ const urlDatabase = {
   "9sm5xK": "https://old.reddit.com/r/nba/",
   "hoopsh": "https://streamable.com/0lru8"
 };
+
+
+// Convert incoming requestData from buffer to a useable String
+app.use(bodyParser.urlencoded({extended: true}));
 
 
 // Set the view engine

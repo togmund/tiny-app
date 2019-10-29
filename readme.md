@@ -11,6 +11,7 @@ You will build an HTTP Server that handles requests from the browser (client). A
 ### NPM Packages Used:
 * [express](https://github.com/expressjs/express)
 * [ejs](https://github.com/mde/ejs)
+* [body-parser](https://github.com/expressjs/body-parser)
 * [nodemon](https://github.com/remy/nodemon)
 
 # Functional Requirements
