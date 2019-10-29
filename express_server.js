@@ -42,9 +42,9 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${newShortUrl}`);
 });
 
-app.post("/urls/:id", (req, res) => {
-  res.redirect("/urls/");
-});
+// app.post("/urls/:id", (req, res) => {
+//   res.redirect("/urls/");
+// });
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
@@ -56,6 +56,7 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
+  console.log(urlDatabase[req.params.shortURL]);
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
 });
