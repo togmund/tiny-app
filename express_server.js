@@ -14,12 +14,12 @@ const urlDatabase = {
 
 // Worker Functions
 const generateRandomString = () => {
-  
+  return Math.random().toString(36).substring(2, 7);
 }
 
 
 // Convert incoming requestData from buffer to a useable String
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Set the view engine
@@ -53,7 +53,6 @@ app.get("/urls/:shortURL", (req, res) => {
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
-
 
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
