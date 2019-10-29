@@ -12,6 +12,11 @@ const urlDatabase = {
   "hoopsh": "https://streamable.com/0lru8"
 };
 
+// Worker Functions
+const generateRandomString = () => {
+  
+}
+
 
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({extended: true}));
@@ -29,6 +34,11 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render("urls_index", templateVars);
+});
+
+app.post("/urls", (req, res) => {
+  console.log(req.body);
+  res.send("Ok");
 });
 
 app.get("/urls/new", (req, res) => {
