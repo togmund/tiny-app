@@ -36,7 +36,7 @@ so that I can learn what content they like.
     * a logout button which makes a POST request to /logout
   * if a user is not logged in, the header shows:
     * a link to the login page (/login)
-    * a link to the registration page (/register)
+    * a link to the registration page (/register) 
 
 ## Behaviour Requirements
 
