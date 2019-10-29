@@ -7,9 +7,9 @@ const PORT = 3000; // default port 8080
 
 // Example Data
 const urlDatabase = {
-  "b2xVn2": "http://www.medium.com",
-  "9sm5xK": "https://old.reddit.com/r/nba/",
-  "hoopsh": "https://streamable.com/0lru8"
+  'b2xVn2': "http://www.medium.com",
+  '9sm5xK': "https://old.reddit.com/r/nba/",
+  'hoopsh': "https://streamable.com/0lru8"
 };
 
 // Worker Functions
@@ -39,6 +39,8 @@ app.get("/urls", (req, res) => {
 app.post("/urls", (req, res) => {
   console.log(req.body);
   res.send("Ok");
+  urlDatabase[generateRandomString()] = req.body.longURL;
+  console.log(urlDatabase);
 });
 
 app.get("/urls/new", (req, res) => {
