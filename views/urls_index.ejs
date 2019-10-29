@@ -30,7 +30,7 @@
           <td><%= url %></td>
           <td><%= urls[url] %></td>
           <td>
-            <form method="POST" action="/urls/hoopsh/delete"><Button>"Delete"</Button></form>
+            <form method="POST" action=<%='/urls/' + url + '/delete'%>><Button>"Delete"</Button></form>
           </td>
         </tr>
         <% } %>
