@@ -37,14 +37,15 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  let newShortUrl = generateRandomString()
-  urlDatabase[newShortUrl] = req.body.longURL;
-  res.redirect(`/urls/${newShortUrl}`);
+  let newShortURL = generateRandomString()
+  urlDatabase[newShortURL] = req.body.longURL;
+  res.redirect(`/urls/${newShortURL}`);
 });
 
-// app.post("/urls/:id", (req, res) => {
-//   res.redirect("/urls/");
-// });
+app.post("/urls/:id", (req, res) => {
+  urlDatabase[id] = req.params.longURL;
+  res.redirect(`/urls/${req.params.id}`);
+});
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
