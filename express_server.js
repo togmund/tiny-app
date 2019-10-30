@@ -31,10 +31,10 @@ const generateRandomString = () => {
   return Math.random().toString(36).substring(2, 7);
 };
 
-const findEmailInUserDB = (submittedEmail) => {
+const findUserAccountbyEmail = (submittedEmail) => {
   for (const userId in users) {
     if (submittedEmail === users[userId].email) {
-      return true;
+      return userId;
     }
   } return false;
 }
@@ -54,12 +54,12 @@ app.set("view engine", "ejs");
 
 // POST Methods
 app.post("/login", (req, res) => {
-  res.cookie("username", req.body.username);
+  res.cookie("user_id", findUserAccountbyEmail(req.body.email));
   res.redirect("/urls");
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("username");
+  res.clearCookie("user_id");
   res.redirect("/urls");
 });
 
@@ -79,19 +79,12 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   res.redirect("/urls");
 });
 
-/*
-Modify the POST /register endpoint to handle the following error conditions:
-
-If the e-mail or password are empty strings, send back a response with the 400 status code.
-If someone tries to register with an email that is already in the users object, send back a response with the 400 status code. Checking for an email in the users object is something we'll need to do in other routes as well. Consider creating an email lookup helper function to keep your code DRY
-*/
-
 app.post("/register", (req, res) => {
   let newUserID = generateRandomString();
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
     res.status(400).send('nah, man');
   }
-  else if (findEmailInUserDB(req.body.email)) {
+  else if (findUserAccountbyEmail(req.body.email)) {
     res.status(400).send('nuh uh');
   }
   else if (req.body.password === req.body.confirmPassword) {
@@ -112,7 +105,7 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies.username
+    user_id: req.cookies.user_id
   };
   res.render("urls_index", templateVars);
 });
@@ -120,7 +113,7 @@ app.get("/urls", (req, res) => {
 app.get("/urls/new", (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies.username
+    user_id: req.cookies.user_id
   };
   res.render("urls_new", templateVars);
 });
@@ -129,7 +122,7 @@ app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL],
-    username: req.cookies.username
+    user_id: req.cookies.user_id
   };
   res.render("urls_show", templateVars);
 });
@@ -142,7 +135,7 @@ app.get("/register", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: urlDatabase[req.params.shortURL],
-    username: req.cookies.username
+    user_id: req.cookies.user_id
   };
   res.render("users_registration", templateVars);
 });
