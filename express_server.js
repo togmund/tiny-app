@@ -12,6 +12,7 @@ const urlDatabase = {
   'hoopsh': "https://streamable.com/0lru8"
 };
 
+
 // Worker Functions
 const generateRandomString = () => {
   return Math.random().toString(36).substring(2, 7);
@@ -66,8 +67,7 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log(res.cookie());
-  res.cookie();
+  res.cookie("username",req.body.username);
   res.redirect("/urls")
 });
 
