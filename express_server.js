@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const morgan = require('morgan');
 const app = express();
 const PORT = 3000; // default port 8080
 
@@ -34,6 +35,7 @@ const generateRandomString = () => {
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(morgan('dev'));
 
 
 // Set the view engine
@@ -70,13 +72,8 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 /*
-This endpoint should add a new user object to the global users object.
-The user object should include the user's id, email and password, similar to the example above.
-To generate a random user ID, use the same function you use to generate random IDs for URLs.
 After adding the user, set a user_id cookie containing the user's newly generated ID.
-Redirect the user to the /urls page.
 Test that the users object is properly being appended to.
-You can insert a console.log or debugger prior to the redirect logic to inspect what data the object contains.
 Also test that the user_id cookie is being set correctly upon redirection.
 You already did this sort of testing in the Cookies in Express activity.
 Use the same approach here.
@@ -87,6 +84,7 @@ app.post("/register", (req, res) => {
   let newUserID = generateRandomString();
   if (req.body.password === req.body.confirmPassword) {
     users[newUserID] = { email: req.body.email, password: req.body.password };
+    res.cookie("user_id", newUserID);
     console.log(users);
     res.redirect(`/urls`);
   } else {
