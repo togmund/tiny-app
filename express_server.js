@@ -30,16 +30,16 @@ app.set("view engine", "ejs");
 
 
 // URL routing
-app.get("/", (req, res) => {
-  res.send("Hello, there!");
+
+// POST Methods
+app.post("/login", (req, res) => {
+  res.cookie("username", req.body.username);
+  res.redirect("/urls");
 });
 
-app.get("/urls", (req, res) => {
-  let templateVars = {
-    urls: urlDatabase,
-    username: req.cookies.username
-  };
-  res.render("urls_index", templateVars);
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+  res.redirect("/urls");
 });
 
 app.post("/urls", (req, res) => {
@@ -51,6 +51,25 @@ app.post("/urls", (req, res) => {
 app.post("/urls/:id", (req, res) => {
   urlDatabase[req.params.id] = req.body.longURL;
   res.redirect(`/urls/${req.params.id}`);
+});
+
+app.post("/urls/:shortURL/delete", (req, res) => {
+  delete urlDatabase[req.params.shortURL];
+  res.redirect("/urls");
+});
+
+
+// GET Methods
+app.get("/", (req, res) => {
+  res.send("Hello, there!");
+});
+
+app.get("/urls", (req, res) => {
+  let templateVars = {
+    urls: urlDatabase,
+    username: req.cookies.username
+  };
+  res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
@@ -70,25 +89,8 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-app.post("/urls/:shortURL/delete", (req, res) => {
-  delete urlDatabase[req.params.shortURL];
-  res.redirect("/urls");
-});
-
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
-});
-
-app.post("/login", (req, res) => {
-  res.cookie("username", req.body.username);
-  res.redirect("/urls");
-});
-
-app.post("/logout", (req, res) => {
-  console.log(req.cookies.username);
-  res.clearCookie("username");
-  console.log(req.cookies.username);
-  res.redirect("/urls");
 });
 
 app.get("/u/:shortURL", (req, res) => {
