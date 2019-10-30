@@ -13,6 +13,19 @@ const urlDatabase = {
   'hoopsh': "https://streamable.com/0lru8"
 };
 
+const users = { 
+  "userRandomID": {
+    id: "userRandomID", 
+    email: "user@example.com", 
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID", 
+    email: "user2@example.com", 
+    password: "dishwasher-funk"
+  }
+}
+
 
 // Worker Functions
 const generateRandomString = () => {
