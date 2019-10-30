@@ -31,6 +31,14 @@ const generateRandomString = () => {
   return Math.random().toString(36).substring(2, 7);
 };
 
+const findEmailInUserDB = (submittedEmail) => {
+  for (const userId in users) {
+    if (submittedEmail === users[userId].email) {
+      return true;
+    }
+  } return false;
+}
+
 
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -80,12 +88,11 @@ If someone tries to register with an email that is already in the users object, 
 
 app.post("/register", (req, res) => {
   let newUserID = generateRandomString();
-  console.log(req.body.email, req.body.email in users.email);
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
-    res.status(400).redirect(`/register`);
+    res.status(400).send('nah, man');
   }
-  else if (req.body.email in users) {
-    res.status(400).redirect(`/register`);
+  else if (findEmailInUserDB(req.body.email)) {
+    res.status(400).send('nuh uh');
   }
   else if (req.body.password === req.body.confirmPassword) {
     users[newUserID] = { email: req.body.email, password: req.body.password };
