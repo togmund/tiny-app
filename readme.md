@@ -12,6 +12,8 @@ You will build an HTTP Server that handles requests from the browser (client). A
 * [express](https://github.com/expressjs/express)
 * [ejs](https://github.com/mde/ejs)
 * [body-parser](https://github.com/expressjs/body-parser)
+* [cookie-parser](https://github.com/expressjs/cookie-parser)
+* [bootstrap](https://github.com/twbs/bootstrap)
 * [nodemon](https://github.com/remy/nodemon)
 
 # Functional Requirements
