@@ -23,7 +23,7 @@ const users = {
     email: "user2@example.com",
     password: "dishwasher-funk"
   }
-}
+};
 
 
 // Worker Functions
@@ -72,24 +72,27 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 /*
-After adding the user, set a user_id cookie containing the user's newly generated ID.
-Test that the users object is properly being appended to.
-Also test that the user_id cookie is being set correctly upon redirection.
-You already did this sort of testing in the Cookies in Express activity.
-Use the same approach here.
+Modify the POST /register endpoint to handle the following error conditions:
+
+If the e-mail or password are empty strings, send back a response with the 400 status code.
+If someone tries to register with an email that is already in the users object, send back a response with the 400 status code. Checking for an email in the users object is something we'll need to do in other routes as well. Consider creating an email lookup helper function to keep your code DRY
 */
 
 app.post("/register", (req, res) => {
-  console.log(users);
   let newUserID = generateRandomString();
-  if (req.body.password === req.body.confirmPassword) {
+  console.log(req.body.email, req.body.email in users.email);
+  if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
+    res.status(400).redirect(`/register`);
+  }
+  else if (req.body.email in users) {
+    res.status(400).redirect(`/register`);
+  }
+  else if (req.body.password === req.body.confirmPassword) {
     users[newUserID] = { email: req.body.email, password: req.body.password };
     res.cookie("user_id", newUserID);
-    console.log(users);
     res.redirect(`/urls`);
   } else {
-    console.log("they mucked up the password");
-    res.redirect(`/register`);
+    res.res.redirect(`/register`);
   }
 });
 
