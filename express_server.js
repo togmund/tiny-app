@@ -83,9 +83,16 @@ Use the same approach here.
 */
 
 app.post("/register", (req, res) => {
-  let foo = generateRandomString();
-  bar[foo] = biff.buff.foo;
-  res.redirect(`/urls`);
+  console.log(users);
+  let newUserID = generateRandomString();
+  if (req.body.password === req.body.confirmPassword) {
+    users[newUserID] = { email: req.body.email, password: req.body.password };
+    console.log(users);
+    res.redirect(`/urls`);
+  } else {
+    console.log("they mucked up the password");
+    res.redirect(`/register`);
+  }
 });
 
 
