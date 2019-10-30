@@ -13,15 +13,13 @@ const urlDatabase = {
   'hoopsh': "https://streamable.com/0lru8"
 };
 
-const users = { 
+const users = {
   "userRandomID": {
-    id: "userRandomID", 
-    email: "user@example.com", 
+    email: "user@example.com",
     password: "purple-monkey-dinosaur"
   },
- "user2RandomID": {
-    id: "user2RandomID", 
-    email: "user2@example.com", 
+  "user2RandomID": {
+    email: "user2@example.com",
     password: "dishwasher-funk"
   }
 }
@@ -69,6 +67,25 @@ app.post("/urls/:id", (req, res) => {
 app.post("/urls/:shortURL/delete", (req, res) => {
   delete urlDatabase[req.params.shortURL];
   res.redirect("/urls");
+});
+
+/*
+This endpoint should add a new user object to the global users object.
+The user object should include the user's id, email and password, similar to the example above.
+To generate a random user ID, use the same function you use to generate random IDs for URLs.
+After adding the user, set a user_id cookie containing the user's newly generated ID.
+Redirect the user to the /urls page.
+Test that the users object is properly being appended to.
+You can insert a console.log or debugger prior to the redirect logic to inspect what data the object contains.
+Also test that the user_id cookie is being set correctly upon redirection.
+You already did this sort of testing in the Cookies in Express activity.
+Use the same approach here.
+*/
+
+app.post("/register", (req, res) => {
+  let foo = generateRandomString();
+  bar[foo] = biff.buff.foo;
+  res.redirect(`/urls`);
 });
 
 
