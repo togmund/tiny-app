@@ -119,8 +119,6 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   let templateVars = {
-    shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL],
     user_id: req.cookies.user_id
   };
   res.render("users_login", templateVars);
@@ -128,8 +126,6 @@ app.get("/login", (req, res) => {
 
 app.get("/register", (req, res) => {
   let templateVars = {
-    shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL],
     user_id: req.cookies.user_id
   };
   res.render("users_registration", templateVars);
@@ -154,7 +150,7 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL],
+    longURL: urlsForUser(req.cookies.user_id)[req.params.shortURL],
     user_id: req.cookies.user_id
   };
   res.render("urls_show", templateVars);
