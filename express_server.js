@@ -92,7 +92,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("user_id");
+  req.session = null;
   res.redirect("/urls");
 });
 
@@ -108,7 +108,10 @@ app.post("/urls", (req, res) => {
 
 app.post("/urls/:id", (req, res) => {
   if (req.session.user_id === urlDatabase[req.params.id].userID) {
-    urlDatabase[req.params.id] = req.body.longURL;
+    urlDatabase[req.params.id] =  {
+      longURL: req.body.longURL,
+      userID: req.session.user_id
+    };
     res.redirect(`/urls/${req.params.id}`);
   } else {
     res.status(401).send("you don't own this");

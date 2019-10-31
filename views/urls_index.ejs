@@ -25,7 +25,6 @@
           <th scope="col">Short URL</th>
           <th scope="col">Long URL</th>
           <th scope="col"></th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -34,14 +33,14 @@
           <td><%= url %></td>
           <td><%= urls[url] %></td>
           <td>
+              <div class="btn-group" role="group" aria-label="Basic example">
             <form method="GET" action=<%='/urls/'+url%>>
               <button type="submit" class="btn btn-secondary">edit</button>
             </form>
-          </td>
-          <td>
             <form method="POST" action=<%='/urls/'+url+'/delete'%>>
               <button type="submit" class="btn btn-outline-danger">delete</button>
             </form>
+          </div>
           </td>
         </tr>
         <% } %>
