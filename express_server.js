@@ -8,17 +8,11 @@ const PORT = 3000; // default port 8080
 
 
 // Example Data
-// URLs Belong to Users
-// In order to keep track of which URLs belong to particular users, we'll need to associate each new URL with the user that created it.
-
-// Up to this point, our urlDatabase was an object with shortURL keys and longURL values. Now that we have more data to keep track of, lets change the structure of our uRLDatabase. We'll keep the shortURL as the key, but we'll change the value to an object that has longURL and userID keys itself. Here's an example:
-
 const urlDatabase = {
   b6UTxQ: { longURL: "http://www.medium.com", userID: "g33k3" },
+  b7UTxQ: { longURL: "http://www.medium.com/tags/elm", userID: "g33k3" },
   i3BoGr: { longURL: "https://streamable.com/0lru8", userID: "b33bL" }
 };
-
-// Add a new userID (string) property to individual url objects within the urlDatabase collection. It should just contain the user ID (the key in the users collection) and not a copy of the entire user data. All URLs should now have this extra property.
 
 const users = {
   "g33k3": {
@@ -42,9 +36,18 @@ const findUserAccountbyEmail = (submittedEmail) => {
     if (submittedEmail === users[userId].email) {
       return userId;
     }
-  } return false;
+  }
+  return false;
 };
 
+const urlsForUser = (id) => {
+  const filteredUrlDB = {}
+  for (const shortURL in urlDatabase) {
+    if (urlDatabase[shortURL].userID === id) {
+      filteredUrlDB[shortURL] = urlDatabase[shortURL].longURL
+    }
+  } return filteredUrlDB;
+};
 
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -134,15 +137,15 @@ app.get("/register", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let templateVars = {
-    urls: urlDatabase,
+    urls: urlsForUser(req.cookies.user_id),
     user_id: req.cookies.user_id
   };
-    res.render("urls_index", templateVars);
+  res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
   let templateVars = {
-    urls: urlDatabase,
+    urls: urlsForUser(req.cookies.user_id),
     user_id: req.cookies.user_id
   };
   res.render("urls_new", templateVars);
@@ -158,7 +161,7 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
+  res.json(urlsForUser(req.cookies.user_id));
 });
 
 app.get("/u/:shortURL", (req, res) => {
