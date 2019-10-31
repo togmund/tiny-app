@@ -49,6 +49,7 @@ const urlsForUser = (id) => {
   } return filteredUrlDB;
 };
 
+
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -62,6 +63,8 @@ app.set("view engine", "ejs");
 // URL routing
 
 // POST Methods
+
+//  // Users Methods
 app.post("/login", (req, res) => {
   if (req.body.email === "" | req.body.password === "") {
     res.status(400).send('empty login field');
@@ -95,6 +98,7 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 });
 
+//  // URLs Methods
 app.post("/urls", (req, res) => {
   let newShortURL = generateRandomString();
   urlDatabase[newShortURL] = {
@@ -105,8 +109,12 @@ app.post("/urls", (req, res) => {
 });
 
 app.post("/urls/:id", (req, res) => {
-  urlDatabase[req.params.id] = req.body.longURL;
-  res.redirect(`/urls/${req.params.id}`);
+  if (req.cookies.user_id === urlDatabase[req.params.id].userID) {
+    urlDatabase[req.params.id] = req.body.longURL;
+    res.redirect(`/urls/${req.params.id}`);
+  } else {
+    res.status(401).send("you don't own this");
+  }
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
@@ -120,10 +128,8 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 
 // GET Methods
-app.get("/", (req, res) => {
-  res.send("Hello, there!");
-});
 
+//  // Users Methods
 app.get("/login", (req, res) => {
   let templateVars = {
     user_id: req.cookies.user_id
@@ -138,6 +144,7 @@ app.get("/register", (req, res) => {
   res.render("users_registration", templateVars);
 });
 
+//  // URLs Methods
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlsForUser(req.cookies.user_id),
@@ -168,8 +175,13 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL];
+  const longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(longURL);
+});
+
+//  // Misc Methods
+app.get("/", (req, res) => {
+  res.send("Hello, there!");
 });
 
 app.get("/hello", (req, res) => {
