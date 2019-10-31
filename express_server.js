@@ -15,14 +15,8 @@ const urlDatabase = {
 };
 
 const users = {
-  "g33k3": {
-    email: "asdf@asdf.asdf",
-    password: "asdf"
-  },
-  "b33bL": {
-    email: "qwer@qwer.qwer",
-    password: "qwer"
-  }
+  "g33k3": { email: "asdf@asdf.asdf", password: "asdf" },
+  "b33bL": { email: "qwer@qwer.qwer", password: "qwer" }
 };
 
 
