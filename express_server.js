@@ -92,7 +92,7 @@ app.post("/register", (req, res) => {
     res.cookie("user_id", newUserID);
     res.redirect(`/urls`);
   } else {
-    res.res.redirect(`/register`);
+    res.redirect(`/register`);
   }
 });
 
@@ -138,6 +138,15 @@ app.get("/register", (req, res) => {
     user_id: req.cookies.user_id
   };
   res.render("users_registration", templateVars);
+});
+
+app.get("/login", (req, res) => {
+  let templateVars = {
+    shortURL: req.params.shortURL,
+    longURL: urlDatabase[req.params.shortURL],
+    user_id: req.cookies.user_id
+  };
+  res.render("users_login", templateVars);
 });
 
 app.get("/u/:shortURL", (req, res) => {
