@@ -41,10 +41,10 @@ const findUserAccountbyEmail = (submittedEmail) => {
 };
 
 const urlsForUser = (id) => {
-  const filteredUrlDB = {}
+  const filteredUrlDB = {};
   for (const shortURL in urlDatabase) {
     if (urlDatabase[shortURL].userID === id) {
-      filteredUrlDB[shortURL] = urlDatabase[shortURL].longURL
+      filteredUrlDB[shortURL] = urlDatabase[shortURL].longURL;
     }
   } return filteredUrlDB;
 };
@@ -97,7 +97,10 @@ app.post("/logout", (req, res) => {
 
 app.post("/urls", (req, res) => {
   let newShortURL = generateRandomString();
-  urlDatabase[newShortURL] = req.body.longURL;
+  urlDatabase[newShortURL] = {
+    longURL: req.body.longURL,
+    userID: req.cookies.user_id
+  };
   res.redirect(`/urls/${newShortURL}`);
 });
 
@@ -107,8 +110,12 @@ app.post("/urls/:id", (req, res) => {
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
-  delete urlDatabase[req.params.shortURL];
-  res.redirect("/urls");
+  if (req.cookies.user_id === urlDatabase[req.params.shortURL].userID) {
+    delete urlDatabase[req.params.shortURL];
+    res.redirect("/urls");
+  } else {
+    res.status(401).send("you don't own this");
+  }
 });
 
 
