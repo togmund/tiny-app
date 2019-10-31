@@ -2,12 +2,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
 const morgan = require('morgan');
 const app = express();
-const PORT = 3000; // default port 8080
+const PORT = 3000;
 
 
-// Example Data
+// "Databases"
 const urlDatabase = {
   b6UTxQ: { longURL: "http://www.medium.com", userID: "g33k3" },
   b7UTxQ: { longURL: "http://www.medium.com/tags/elm", userID: "g33k3" },
@@ -56,15 +57,15 @@ app.set("view engine", "ejs");
 
 // URL routing
 
-// POST Methods
+// // POST Methods
 
-//  // Users Methods
+// // // Users Methods
 app.post("/login", (req, res) => {
   if (req.body.email === "" | req.body.password === "") {
     res.status(400).send('empty login field');
   } else if (!findUserAccountbyEmail(req.body.email)) {
     res.status(403).send("don't see that email address");
-  } else if (req.body.password === users[findUserAccountbyEmail(req.body.email)].password) {
+  } else if (bcrypt.compareSync(req.body.password, users[findUserAccountbyEmail(req.body.email)].password)) {
     res.cookie("user_id", findUserAccountbyEmail(req.body.email));
     res.redirect(`/urls`);
   } else {
@@ -73,14 +74,16 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  let newUserID = generateRandomString();
+  const newUserID = generateRandomString();
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10)
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
-    res.status(400).send('nah, man');
+    res.status(400).send('Not all fields are full');
   } else if (findUserAccountbyEmail(req.body.email)) {
-    res.status(400).send('nuh uh');
-  } else if (req.body.password === req.body.confirmPassword) {
-    users[newUserID] = { email: req.body.email, password: req.body.password };
+    res.status(400).send('that email address is in use');
+  } else if (bcrypt.compareSync(req.body.confirmPassword, hashedPassword)) {
+    users[newUserID] = { email: req.body.email, password: hashedPassword };
     res.cookie("user_id", newUserID);
+    console.log(users);
     res.redirect(`/urls`);
   } else {
     res.redirect(`/register`);
@@ -92,7 +95,7 @@ app.post("/logout", (req, res) => {
   res.redirect("/urls");
 });
 
-//  // URLs Methods
+// // // URLs Methods
 app.post("/urls", (req, res) => {
   let newShortURL = generateRandomString();
   urlDatabase[newShortURL] = {
@@ -121,9 +124,9 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 
-// GET Methods
+// // GET Methods
 
-//  // Users Methods
+// // // Users Methods
 app.get("/login", (req, res) => {
   let templateVars = {
     user_id: req.cookies.user_id
@@ -138,7 +141,7 @@ app.get("/register", (req, res) => {
   res.render("users_registration", templateVars);
 });
 
-//  // URLs Methods
+// // // URLs Methods
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlsForUser(req.cookies.user_id),
@@ -173,7 +176,7 @@ app.get("/u/:shortURL", (req, res) => {
   res.redirect(longURL);
 });
 
-//  // Misc Methods
+// // // Misc Methods
 app.get("/", (req, res) => {
   res.send("Hello, there!");
 });
