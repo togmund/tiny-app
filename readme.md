@@ -13,6 +13,7 @@ You will build an HTTP Server that handles requests from the browser (client). A
 * [ejs](https://github.com/mde/ejs)
 * [body-parser](https://github.com/expressjs/body-parser)
 * [cookie-parser](https://github.com/expressjs/cookie-parser)
+* [cookie-session](https://github.com/expressjs/cookie-session)
 * [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 * [bootstrap](https://github.com/twbs/bootstrap)
 * [morgan](https://github.com/expressjs/morgan)
