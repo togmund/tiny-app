@@ -37,7 +37,7 @@ const findUserAccountbyEmail = (submittedEmail) => {
       return userId;
     }
   } return false;
-}
+};
 
 
 // Convert incoming requestData from buffer to a useable String
@@ -54,8 +54,16 @@ app.set("view engine", "ejs");
 
 // POST Methods
 app.post("/login", (req, res) => {
-  res.cookie("user_id", findUserAccountbyEmail(req.body.email));
-  res.redirect("/urls");
+  if (req.body.email === "" | req.body.password === "") {
+    res.status(400).send('empty login field');
+  } else if (!findUserAccountbyEmail(req.body.email)) {
+    res.status(403).send("don't see that email address");
+  } else if (req.body.password === users[findUserAccountbyEmail(req.body.email)].password) {
+    res.cookie("user_id", findUserAccountbyEmail(req.body.email));
+    res.redirect(`/urls`);
+  } else {
+    res.status(403).send('right email, wrong password');
+  }
 });
 
 app.post("/logout", (req, res) => {
@@ -83,11 +91,9 @@ app.post("/register", (req, res) => {
   let newUserID = generateRandomString();
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
     res.status(400).send('nah, man');
-  }
-  else if (findUserAccountbyEmail(req.body.email)) {
+  } else if (findUserAccountbyEmail(req.body.email)) {
     res.status(400).send('nuh uh');
-  }
-  else if (req.body.password === req.body.confirmPassword) {
+  } else if (req.body.password === req.body.confirmPassword) {
     users[newUserID] = { email: req.body.email, password: req.body.password };
     res.cookie("user_id", newUserID);
     res.redirect(`/urls`);
