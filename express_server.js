@@ -8,20 +8,26 @@ const PORT = 3000; // default port 8080
 
 
 // Example Data
+// URLs Belong to Users
+// In order to keep track of which URLs belong to particular users, we'll need to associate each new URL with the user that created it.
+
+// Up to this point, our urlDatabase was an object with shortURL keys and longURL values. Now that we have more data to keep track of, lets change the structure of our uRLDatabase. We'll keep the shortURL as the key, but we'll change the value to an object that has longURL and userID keys itself. Here's an example:
+
 const urlDatabase = {
-  'b2xVn2': "http://www.medium.com",
-  '9sm5xK': "https://old.reddit.com/r/nba/",
-  'hoopsh': "https://streamable.com/0lru8"
+  b6UTxQ: { longURL: "http://www.medium.com", userID: "g33k3" },
+  i3BoGr: { longURL: "https://streamable.com/0lru8", userID: "b33bL" }
 };
 
+// Add a new userID (string) property to individual url objects within the urlDatabase collection. It should just contain the user ID (the key in the users collection) and not a copy of the entire user data. All URLs should now have this extra property.
+
 const users = {
-  "userRandomID": {
-    email: "user@example.com",
-    password: "purple-monkey-dinosaur"
+  "g33k3": {
+    email: "asdf@asdf.asdf",
+    password: "asdf"
   },
-  "user2RandomID": {
-    email: "user2@example.com",
-    password: "dishwasher-funk"
+  "b33bL": {
+    email: "qwer@qwer.qwer",
+    password: "qwer"
   }
 };
 
