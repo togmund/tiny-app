@@ -113,7 +113,11 @@ app.get("/urls", (req, res) => {
     urls: urlDatabase,
     user_id: req.cookies.user_id
   };
-  res.render("urls_index", templateVars);
+  if(templateVars.user_id) {
+    res.render("urls_index", templateVars);
+  } else {
+    res.render("users_login", templateVars);
+  }
 });
 
 app.get("/urls/new", (req, res) => {
