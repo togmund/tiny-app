@@ -13,12 +13,9 @@ const urlDatabase = {
 
 // Tests
 describe("urlsForUserTest", () => {
-  it("should return an object with the following 'key: value' pairs 'b6UTxQ: http://www.medium.com' & b7UTxQ: 'http://www.medium.com/tags/elm'", () => {
-    assert.deepEqual(help.urlsForUser("g33k3", urlDatabase),
-    {
-      b6UTxQ: "http://www.medium.com",
-      b7UTxQ: "http://www.medium.com/tags/elm"
-    });
+  it("should return an empty object when given a userID not associated with any urls", () => {
+    assert.deepEqual(help.urlsForUser("boogs", urlDatabase),
+    {});
   });
 
   it("should return an object with the following 'key: value' pair 'i3BoGr: https://streamable.com/0lru8'", () => {

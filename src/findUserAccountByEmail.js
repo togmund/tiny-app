@@ -5,7 +5,6 @@ const findUserAccountByEmail = (submittedEmail, database) => {
       return userId;
     }
   }
-  return false;
 };
 
 

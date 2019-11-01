@@ -4,12 +4,6 @@ const assert = require("chai").assert;
 
 
 // "Databases"
-const urlDatabase = {
-  b6UTxQ: { longURL: "http://www.medium.com", userID: "g33k3" },
-  b7UTxQ: { longURL: "http://www.medium.com/tags/elm", userID: "g33k3" },
-  i3BoGr: { longURL: "https://streamable.com/0lru8", userID: "b33bL" }
-};
-
 const users = {
   "g33k3": { email: "asdf@asdf.asdf", password: "asdf" },
   "b33bL": { email: "qwer@qwer.qwer", password: "qwer" }
@@ -18,12 +12,12 @@ const users = {
 
 // Tests
 describe("finderUserAccountByEmailTest", () => {
-  it("should", () => {
-    assert.deepEqual(1,1);
+  it("should find g33k3 when given associated email 'asdf@asdf.asdf'", () => {
+    assert.deepEqual(help.findUserAccountByEmail("asdf@asdf.asdf", users),"g33k3");
   });
 
-  it("should", () => {
-    assert.deepEqual(1,1);
+  it("should return false when given an email not in the database", () => {
+    assert.deepEqual(help.findUserAccountByEmail("0987@0987.0987", users),undefined);
   });
 });
 

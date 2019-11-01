@@ -2,6 +2,7 @@
 const help = require("../src/helpers");
 const assert = require("chai").assert;
 
+
 // Tests
 describe("generateRandomStringTest", () => {
   it("should generate a random alphanumeric string that is 5 characters long", () => {
