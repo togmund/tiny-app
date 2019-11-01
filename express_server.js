@@ -32,7 +32,7 @@ const users = {
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cookieSession({ name: 'session', keys: ['key1', 'key2'] }))
+app.use(cookieSession({ name: 'session', keys: ['key1', 'key2'] }));
 app.use(morgan('dev'));
 
 
@@ -60,7 +60,7 @@ app.post("/login", (req, res) => {
 
 app.post("/register", (req, res) => {
   const newUserID = help.generateRandomString();
-  const hashedPassword = bcrypt.hashSync(req.body.password, 10)
+  const hashedPassword = bcrypt.hashSync(req.body.password, 10);
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
     res.status(400).send('Not all fields are full');
   } else if (help.findUserAccountByEmail(req.body.email, users)) {

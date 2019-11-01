@@ -5,7 +5,7 @@
   "main": "express_server.js",
   "scripts": {
     "start": "./node_modules/.bin/nodemon -L express_server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "@togmund",
   "license": "ISC",
@@ -19,6 +19,8 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
     "nodemon": "^1.17.5"
   }
 }
