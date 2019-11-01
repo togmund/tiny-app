@@ -1,7 +1,7 @@
 // Requirements and dependencies
 const express = require("express");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser"); // Deprecated for cookie-session
 const cookieSession = require("cookie-session");
 const bcrypt = require('bcrypt');
 const morgan = require('morgan');
@@ -31,7 +31,7 @@ const users = {
 
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser()); // Deprecated for cookie-session
 app.use(cookieSession({ name: 'session', keys: ['key1', 'key2'] }));
 app.use(morgan('dev'));
 
