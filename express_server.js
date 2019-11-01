@@ -8,9 +8,7 @@ const morgan = require('morgan');
 
 
 // Helper Functions
-const generateRandomString = require('./src/helpers');
-const findUserAccountbyEmail = require('./src/helpers');
-const urlsForUser = require('./src/helpers');
+const help = require('./src/helpers');
 
 
 // Environment Constants
@@ -30,7 +28,6 @@ const users = {
   "b33bL": { email: "qwer@qwer.qwer", password: "qwer" }
 };
 
-console.log(users[findUserAccountbyEmail("asdf@asdf.asdf", users)]);
 
 // Convert incoming requestData from buffer to a useable String
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,10 +48,10 @@ app.set("view engine", "ejs");
 app.post("/login", (req, res) => {
   if (req.body.email === "" | req.body.password === "") {
     res.status(400).send('empty login field');
-  } else if (!findUserAccountbyEmail(req.body.email, users)) {
+  } else if (!help.findUserAccountByEmail(req.body.email, users)) {
     res.status(403).send("don't see that email address");
-  } else if (bcrypt.compareSync(req.body.password, users[findUserAccountbyEmail(req.body.email, users)].password)) {
-    req.session.user_id = findUserAccountbyEmail(req.body.email, users);
+  } else if (bcrypt.compareSync(req.body.password, users[help.findUserAccountByEmail(req.body.email, users)].password)) {
+    req.session.user_id = help.findUserAccountByEmail(req.body.email, users);
     res.redirect(`/urls`);
   } else {
     res.status(403).send('right email, wrong password');
@@ -62,11 +59,11 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const newUserID = generateRandomString();
+  const newUserID = help.generateRandomString();
   const hashedPassword = bcrypt.hashSync(req.body.password, 10)
   if (req.body.email === "" | req.body.password === "" | req.body.confirmPassword === "") {
     res.status(400).send('Not all fields are full');
-  } else if (findUserAccountbyEmail(req.body.email, users)) {
+  } else if (help.findUserAccountByEmail(req.body.email, users)) {
     res.status(400).send('that email address is in use');
   } else if (bcrypt.compareSync(req.body.confirmPassword, hashedPassword)) {
     users[newUserID] = { email: req.body.email, password: hashedPassword };
@@ -84,7 +81,7 @@ app.post("/logout", (req, res) => {
 
 // // // URLs Methods
 app.post("/urls", (req, res) => {
-  let newShortURL = generateRandomString();
+  let newShortURL = help.generateRandomString();
   urlDatabase[newShortURL] = {
     longURL: req.body.longURL,
     userID: req.session.user_id
@@ -134,7 +131,7 @@ app.get("/register", (req, res) => {
 // // // URLs Methods
 app.get("/urls", (req, res) => {
   let templateVars = {
-    urls: urlsForUser(req.session.user_id, users),
+    urls: help.urlsForUser(req.session.user_id, users),
     user_id: req.session.user_id
   };
   res.render("urls_index", templateVars);
@@ -142,7 +139,7 @@ app.get("/urls", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   let templateVars = {
-    urls: urlsForUser(req.session.user_id, users),
+    urls: help.urlsForUser(req.session.user_id, users),
     user_id: req.session.user_id
   };
   res.render("urls_new", templateVars);
@@ -151,14 +148,14 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
-    longURL: urlsForUser(req.session.user_id, users)[req.params.shortURL],
+    longURL: help.urlsForUser(req.session.user_id, users)[req.params.shortURL],
     user_id: req.session.user_id
   };
   res.render("urls_show", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
-  res.json(urlsForUser(req.session.user_id, users));
+  res.json(help.urlsForUser(req.session.user_id, users));
 });
 
 app.get("/u/:shortURL", (req, res) => {
