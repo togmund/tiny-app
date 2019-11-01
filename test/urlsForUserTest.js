@@ -10,20 +10,21 @@ const urlDatabase = {
   i3BoGr: { longURL: "https://streamable.com/0lru8", userID: "b33bL" }
 };
 
-const users = {
-  "g33k3": { email: "asdf@asdf.asdf", password: "asdf" },
-  "b33bL": { email: "qwer@qwer.qwer", password: "qwer" }
-};
-
 
 // Tests
 describe("urlsForUserTest", () => {
-  it("should", () => {
-    assert.deepEqual(1,1);
+  it("should return an object with the following 'key: value' pairs 'b6UTxQ: http://www.medium.com' & b7UTxQ: 'http://www.medium.com/tags/elm'", () => {
+    assert.deepEqual(help.urlsForUser("g33k3", urlDatabase),
+    {
+      b6UTxQ: "http://www.medium.com",
+      b7UTxQ: "http://www.medium.com/tags/elm"
+    });
   });
 
-  it("should", () => {
-    assert.deepEqual(1,1);
+  it("should return an object with the following 'key: value' pair 'i3BoGr: https://streamable.com/0lru8'", () => {
+    assert.deepEqual(help.urlsForUser("b33bL", urlDatabase),
+    {
+      i3BoGr: "https://streamable.com/0lru8"
+    });
   });
 });
-

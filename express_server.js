@@ -131,7 +131,7 @@ app.get("/register", (req, res) => {
 // // // URLs Methods
 app.get("/urls", (req, res) => {
   let templateVars = {
-    urls: help.urlsForUser(req.session.user_id, users),
+    urls: help.urlsForUser(req.session.user_id, urlDatabase),
     user_id: req.session.user_id
   };
   res.render("urls_index", templateVars);
@@ -139,7 +139,7 @@ app.get("/urls", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
   let templateVars = {
-    urls: help.urlsForUser(req.session.user_id, users),
+    urls: help.urlsForUser(req.session.user_id, urlDatabase),
     user_id: req.session.user_id
   };
   res.render("urls_new", templateVars);
@@ -148,14 +148,14 @@ app.get("/urls/new", (req, res) => {
 app.get("/urls/:shortURL", (req, res) => {
   let templateVars = {
     shortURL: req.params.shortURL,
-    longURL: help.urlsForUser(req.session.user_id, users)[req.params.shortURL],
+    longURL: help.urlsForUser(req.session.user_id, urlDatabase)[req.params.shortURL],
     user_id: req.session.user_id
   };
   res.render("urls_show", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
-  res.json(help.urlsForUser(req.session.user_id, users));
+  res.json(help.urlsForUser(req.session.user_id, urlDatabase));
 });
 
 app.get("/u/:shortURL", (req, res) => {
