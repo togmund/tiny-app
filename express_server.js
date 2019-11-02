@@ -116,33 +116,41 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 // // // Users Methods
 app.get("/", (req, res) => {
-  if (req.session.user_id) {
-    res.redirect("/urls");
-  } else {
+  if (!req.session.user_id) {
     res.redirect("/login");
+  } else {
+    res.redirect("/urls");
   }
 });
 
 app.get("/login", (req, res) => {
-  const userID = req.session.user_id;
-  let templateVars = {
-    user_id: userID
-  };
-  if (templateVars.user_id !== undefined) {
-    templateVars.email = users[userID].email;
+  if (!req.session.user_id) {
+    const userID = req.session.user_id;
+    let templateVars = {
+      user_id: userID
+    };
+    if (templateVars.user_id !== undefined) {
+      templateVars.email = users[userID].email;
+    }
+    res.render("users_login", templateVars);
+  } else {
+    res.redirect("/urls");
   }
-  res.render("users_login", templateVars);
 });
 
 app.get("/register", (req, res) => {
-  const userID = req.session.user_id;
-  let templateVars = {
-    user_id: userID
-  };
-  if (templateVars.user_id !== undefined) {
-    templateVars.email = users[userID].email;
+  if (!req.session.user_id) {
+    const userID = req.session.user_id;
+    let templateVars = {
+      user_id: userID
+    };
+    if (templateVars.user_id !== undefined) {
+      templateVars.email = users[userID].email;
+    }
+    res.render("users_registration", templateVars);
+  } else {
+    res.redirect("/urls");
   }
-  res.render("users_registration", templateVars);
 });
 
 // // // URLs Methods
@@ -159,15 +167,19 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  const userID = req.session.user_id;
-  let templateVars = {
-    urls: help.urlsForUser(req.session.user_id, urlDatabase),
-    user_id: userID
-  };
-  if (templateVars.user_id !== undefined) {
-    templateVars.email = users[userID].email;
+  if (!req.session.user_id) {
+    res.redirect("/login");
+  } else {
+    const userID = req.session.user_id;
+    let templateVars = {
+      urls: help.urlsForUser(req.session.user_id, urlDatabase),
+      user_id: userID
+    };
+    if (templateVars.user_id !== undefined) {
+      templateVars.email = users[userID].email;
+    }
+    res.render("urls_new", templateVars);
   }
-  res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {

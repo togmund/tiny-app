@@ -80,7 +80,7 @@ so that I can learn what content they like.
       - [X] a text input field for the original (long) URL
       - [X] a submit button which makes a POST request to /urls
   - if user is not logged in:
-    - [ ] redirects to the /login page
+    - [X] redirects to the /login page
 
 - GET /urls/:id
 
@@ -138,7 +138,7 @@ so that I can learn what content they like.
 - GET /login
 
   - if user is logged in:
-    - [ ] (Minor) redirects to /urls
+    - [X] (Minor) redirects to /urls
   - if user is not logged in:
     - returns HTML with:
       - a form which contains:
