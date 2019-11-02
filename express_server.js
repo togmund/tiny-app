@@ -115,6 +115,14 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 // // GET Methods
 
 // // // Users Methods
+app.get("/", (req, res) => {
+  if (req.session.user_id) {
+    res.redirect("/urls");
+  } else {
+    res.redirect("/login");
+  }
+});
+
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
   let templateVars = {
@@ -185,10 +193,6 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 // // // Misc Methods
-app.get("/", (req, res) => {
-  res.send("Hello, there!");
-});
-
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
