@@ -120,11 +120,11 @@ so that I can learn what content they like.
 
   - if user is logged in and owns the URL for the given ID:
     - [x] updates the URL
-    - [ ] redirects to /urls
+    - [X] redirects to /urls
   - if user is not logged in:
     - [ ] (Minor) returns HTML with a relevant error message
   - if user is logged it but does not own the URL for the given ID:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
 
 - POST /urls/:id/delete
   - if user is logged in and owns the URL for the given ID:
@@ -148,7 +148,7 @@ so that I can learn what content they like.
 - GET /register
 
   - if user is logged in:
-    - [ ] (Minor) redirects to /urls
+    - [X] (Minor) redirects to /urls
   - if user is not logged in:
     - returns HTML with:
       - a form which contains:

@@ -82,12 +82,16 @@ app.post("/logout", (req, res) => {
 
 // // // URLs Methods
 app.post("/urls", (req, res) => {
-  let newShortURL = help.generateRandomString();
-  urlDatabase[newShortURL] = {
-    longURL: req.body.longURL,
-    userID: req.session.user_id
-  };
-  res.redirect(`/urls/${newShortURL}`);
+  if (req.session.user_id === urlDatabase[req.params.id].userID) {
+    let newShortURL = help.generateRandomString();
+    urlDatabase[newShortURL] = {
+      longURL: req.body.longURL,
+      userID: req.session.user_id
+    };
+    res.redirect(`/urls/${newShortURL}`);
+  } else {
+    res.status(401).send("you don't own this");
+  }
 });
 
 app.post("/urls/:id", (req, res) => {
@@ -96,7 +100,7 @@ app.post("/urls/:id", (req, res) => {
       longURL: req.body.longURL,
       userID: req.session.user_id
     };
-    res.redirect(`/urls/${req.params.id}`);
+    res.redirect(`/urls`);
   } else {
     res.status(401).send("you don't own this");
   }
