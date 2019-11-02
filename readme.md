@@ -95,11 +95,11 @@ so that I can learn what content they like.
     - [ ] (Stretch) the number of times the short URL was visited
     - [ ] (Stretch) the number of unique visits for the short URL
   - if a URL for the given ID does not exist:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
   - if user is not logged in:
-    - [ ] returns HTML with a relevant error message
+    - [X] returns HTML with a relevant error message
   - if user is logged it but does not own the URL with the given ID:
-    - [ ] returns HTML with a relevant error message
+    - [X] returns HTML with a relevant error message
 
 - GET /u/:id
 
@@ -122,7 +122,7 @@ so that I can learn what content they like.
     - [x] updates the URL
     - [X] redirects to /urls
   - if user is not logged in:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
   - if user is logged it but does not own the URL for the given ID:
     - [X] (Minor) returns HTML with a relevant error message
 
@@ -131,7 +131,7 @@ so that I can learn what content they like.
     - [x] deletes the URL
     - [x] redirects to /urls
   - if user is not logged in:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
   - if user is logged it but does not own the URL for the given ID:
     - [X] (Minor) returns HTML with a relevant error message
 

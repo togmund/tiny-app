@@ -82,16 +82,12 @@ app.post("/logout", (req, res) => {
 
 // // // URLs Methods
 app.post("/urls", (req, res) => {
-  if (req.session.user_id === urlDatabase[req.params.id].userID) {
-    let newShortURL = help.generateRandomString();
-    urlDatabase[newShortURL] = {
-      longURL: req.body.longURL,
-      userID: req.session.user_id
-    };
-    res.redirect(`/urls/${newShortURL}`);
-  } else {
-    res.status(401).send("you don't own this");
-  }
+  let newShortURL = help.generateRandomString();
+  urlDatabase[newShortURL] = {
+    longURL: req.body.longURL,
+    userID: req.session.user_id
+  };
+  res.redirect(`/urls/${newShortURL}`);
 });
 
 app.post("/urls/:id", (req, res) => {
@@ -193,6 +189,12 @@ app.get("/urls/:shortURL", (req, res) => {
     longURL: help.urlsForUser(req.session.user_id, urlDatabase)[req.params.shortURL],
     user_id: userID
   };
+  if (!templateVars.longURL) {
+    res.status(404).send("I don't see this file");
+  }
+  if (req.session.user_id !== templateVars.user_id) {
+    res.status(401).send("you don't own this");
+  }
   if (templateVars.user_id !== undefined) {
     templateVars.email = users[userID].email;
   }
