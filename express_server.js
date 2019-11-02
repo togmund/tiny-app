@@ -91,7 +91,7 @@ app.post("/urls", (req, res) => {
 
 app.post("/urls/:id", (req, res) => {
   if (req.session.user_id === urlDatabase[req.params.id].userID) {
-    urlDatabase[req.params.id] =  {
+    urlDatabase[req.params.id] = {
       longURL: req.body.longURL,
       userID: req.session.user_id
     };
@@ -115,41 +115,61 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 // // // Users Methods
 app.get("/login", (req, res) => {
+  const userID = req.session.user_id;
+  let foundEmail = undefined
+  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
-    user_id: req.session.user_id
+    user_id: userID,
+    email: foundEmail
   };
   res.render("users_login", templateVars);
 });
 
 app.get("/register", (req, res) => {
+  const userID = req.session.user_id;
+  let foundEmail = undefined
+  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
-    user_id: req.session.user_id
+    user_id: userID,
+    email: foundEmail
   };
   res.render("users_registration", templateVars);
 });
 
 // // // URLs Methods
 app.get("/urls", (req, res) => {
+  const userID = req.session.user_id;
+  let foundEmail = undefined
+  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     urls: help.urlsForUser(req.session.user_id, urlDatabase),
-    user_id: req.session.user_id
+    user_id: userID,
+    email: foundEmail
   };
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
+  const userID = req.session.user_id;
+  let foundEmail = undefined
+  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     urls: help.urlsForUser(req.session.user_id, urlDatabase),
-    user_id: req.session.user_id
+    user_id: userID,
+    email: foundEmail
   };
   res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
+  const userID = req.session.user_id;
+  let foundEmail = undefined
+  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: help.urlsForUser(req.session.user_id, urlDatabase)[req.params.shortURL],
-    user_id: req.session.user_id
+    user_id: userID,
+    email: foundEmail
   };
   res.render("urls_show", templateVars);
 });
