@@ -49,6 +49,7 @@ app.post("/login", (req, res) => {
   if (req.body.email === "" | req.body.password === "") {
     res.status(400).send('empty login field');
   } else if (!help.findUserAccountByEmail(req.body.email, users)) {
+    console.log(help.findUserAccountByEmail(req.body.email, users));
     res.status(403).send("don't see that email address");
   } else if (bcrypt.compareSync(req.body.password, users[help.findUserAccountByEmail(req.body.email, users)].password)) {
     req.session.user_id = help.findUserAccountByEmail(req.body.email, users);
@@ -116,61 +117,61 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 // // // Users Methods
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
-  let foundEmail = undefined
-  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
-    user_id: userID,
-    email: foundEmail
+    user_id: userID
   };
+  if (templateVars.user_id !== undefined) {
+    templateVars.email = users[userID].email;
+  }
   res.render("users_login", templateVars);
 });
 
 app.get("/register", (req, res) => {
   const userID = req.session.user_id;
-  let foundEmail = undefined
-  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
-    user_id: userID,
-    email: foundEmail
+    user_id: userID
   };
+  if (templateVars.user_id !== undefined) {
+    templateVars.email = users[userID].email;
+  }
   res.render("users_registration", templateVars);
 });
 
 // // // URLs Methods
 app.get("/urls", (req, res) => {
   const userID = req.session.user_id;
-  let foundEmail = undefined
-  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     urls: help.urlsForUser(req.session.user_id, urlDatabase),
-    user_id: userID,
-    email: foundEmail
+    user_id: userID
   };
+  if (templateVars.user_id !== undefined) {
+    templateVars.email = users[userID].email;
+  }
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
   const userID = req.session.user_id;
-  let foundEmail = undefined
-  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     urls: help.urlsForUser(req.session.user_id, urlDatabase),
-    user_id: userID,
-    email: foundEmail
+    user_id: userID
   };
+  if (templateVars.user_id !== undefined) {
+    templateVars.email = users[userID].email;
+  }
   res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
   const userID = req.session.user_id;
-  let foundEmail = undefined
-  if (!userID === undefined) { foundEmail = users[req.session.user_id].email }
   let templateVars = {
     shortURL: req.params.shortURL,
     longURL: help.urlsForUser(req.session.user_id, urlDatabase)[req.params.shortURL],
-    user_id: userID,
-    email: foundEmail
+    user_id: userID
   };
+  if (templateVars.user_id !== undefined) {
+    templateVars.email = users[userID].email;
+  }
   res.render("urls_show", templateVars);
 });
 
