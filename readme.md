@@ -106,7 +106,7 @@ so that I can learn what content they like.
   - if URL for the given ID exists:
     - [X] redirects to the corresponding long URL
   - if URL for the given ID does not exist:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
 
 - POST /urls
 
@@ -114,7 +114,7 @@ so that I can learn what content they like.
     - [x] generates a short URL, saves it, and associates it with the user
     - [x] redirects to /urls/:id, where :id matches the ID of the newly saved URL
   - if user is not logged in:
-    - [ ] (Minor) returns HTML with a relevant error message
+    - [X] (Minor) returns HTML with a relevant error message
 
 - POST /urls/:id
 

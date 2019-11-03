@@ -50,12 +50,12 @@ app.post("/login", (req, res) => {
     res.status(400).send('empty login field');
   } else if (!help.findUserAccountByEmail(req.body.email, users)) {
     console.log(help.findUserAccountByEmail(req.body.email, users));
-    res.status(403).send("don't see that email address");
+    res.status(403).send('incorrect credentials');
   } else if (bcrypt.compareSync(req.body.password, users[help.findUserAccountByEmail(req.body.email, users)].password)) {
     req.session.user_id = help.findUserAccountByEmail(req.body.email, users);
     res.redirect(`/urls`);
   } else {
-    res.status(403).send('right email, wrong password');
+    res.status(403).send('incorrect credentials');
   }
 });
 
@@ -87,15 +87,19 @@ app.post("/urls", (req, res) => {
     longURL: req.body.longURL,
     userID: req.session.user_id
   };
+  if (req.session.user_id) {
   res.redirect(`/urls/${newShortURL}`);
+} else {
+  res.status(401).send("you are not authorized to do this");
+}
 });
 
 app.post("/urls/:id", (req, res) => {
-  if (req.session.user_id === urlDatabase[req.params.id].userID) {
     urlDatabase[req.params.id] = {
       longURL: req.body.longURL,
       userID: req.session.user_id
     };
+    if (req.session.user_id === urlDatabase[req.params.id].userID) {
     res.redirect(`/urls`);
   } else {
     res.status(401).send("you don't own this");
@@ -206,6 +210,9 @@ app.get("/urls.json", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
+  if (urlDatabase[req.params.shortURL] === undefined) {
+    res.status(404).send("I don't see this file");
+  }
   const longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(longURL);
 });
