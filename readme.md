@@ -5,8 +5,12 @@ This four-day project will have you building a web app using Node. The app will 
 
 ## Final Product
 
-!["screenshot description"](#)
-!["screenshot description"](#)
+!["Screenshot of URLs page"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/urls-page.png)
+!["Screenshot of Registration page"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/registration.png)
+!["Screenshot of New URL page"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/urls-new.png)
+!["Screenshot of Edit URL page"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/urls-edit.png)
+!["Screenshot of Login page for small browser windows"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/login-mobile.png)
+!["Screenshot of URLs page showing expanded small-browser menu"](https://github.com/togmund/tiny-app/blob/feature/submission-prep/docs/urls-mobile-menu-extended.png)
 
 ### Contributors:
 - [@togmund](https://github.com/togmund)
