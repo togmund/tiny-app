@@ -3,13 +3,16 @@
 ## Goal
 This four-day project will have you building a web app using Node. The app will allow users to shorten long URLs much like TinyURL.com and bit.ly do.
 
-You will build an HTTP Server that handles requests from the browser (client). Along the way you'll get introduced to some more advanced JavaScript and Node concepts, and you'll also learn more about Express, a web framework which is very popular in the Node community.
+## Final Product
+
+!["screenshot description"](#)
+!["screenshot description"](#)
 
 ### Contributors:
 - [@togmund](https://github.com/togmund)
 
 ### NPM Packages Used:
-|Reqired|Deprecated|Developer|
+|Required|Deprecated|Developer|
 |-|-|-|
 |[express](https://github.com/expressjs/express)| | |
 |[ejs](https://github.com/mde/ejs)| | |
@@ -21,6 +24,11 @@ You will build an HTTP Server that handles requests from the browser (client). A
 | | |[chai](https://github.com/chaijs/chai)|
 | | |[morgan](https://github.com/expressjs/morgan)|
 | | |[nodemon](https://github.com/remy/nodemon)|
+
+## Getting Started
+
+- Install all dependencies (using the `npm install` command).
+- Run the development web server using the `node express_server.js` command.
 
 # Functional Requirements
 
